@@ -3,7 +3,10 @@ import { Checkbox } from '../checkbox';
 import { TodosContext } from '../../todo-context';
 import './todo-list.scss';
 
-export const TodoList = ({ todos }) => {
+export const TodoList = ({
+  todos, totalTodos, page, setPage,
+  itemsPerPage,
+ }) => {
   const { setTodos } = React.useContext(TodosContext);
 
   const handleDelete = (id) => {
@@ -39,6 +42,34 @@ const handleKeyUp = (e, id) => {
       ) : (
         <div className="no-todos">Looks like you&apos;re up for a challenge!</div>
       )}
+      {totalTodos > itemsPerPage && (
+      <div className="pagination">
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          disabled={page === 1}
+        >
+          Prev
+        </button>
+        <span className="page-info">
+          Page
+          {' '}
+          {page}
+          {' '}
+          of
+          {' '}
+          {Math.ceil(totalTodos / itemsPerPage)}
+        </span>
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.min(p + 1,
+            Math.ceil(totalTodos / itemsPerPage)))}
+          disabled={page === Math.ceil(totalTodos / itemsPerPage)}
+        >
+          Next
+        </button>
+      </div>
+    )}
     </div>
   );
 };

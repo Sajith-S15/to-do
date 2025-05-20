@@ -28,3 +28,30 @@
   font-size: 14px;
   color: gray;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+
+  button {
+    padding: 5px 10px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:disabled {
+      background: #eee;
+      cursor: not-allowed;
+    }
+  }
+
+  .page-info {
+    font-weight: bold;
+    display: flex;
+   
+  }
+}

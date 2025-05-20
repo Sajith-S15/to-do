@@ -68,7 +68,8 @@ export const App = () => {
   const [todos, setTodos] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [filter, setFilter] = React.useState('all');
-
+  const [page, setPage] = React.useState(1);
+  const ITEMS_PER_PAGE = 5;
   const filteredTodos = todos.filter((todo) => {
     const matchesSearch = todo.label.toLowerCase()
     .includes(searchTerm.toLowerCase());
@@ -78,6 +79,13 @@ export const App = () => {
 
     return matchesSearch && matchesFilter;
   });
+  React.useEffect(() => {
+  setPage(1);
+}, [searchTerm, filter]);
+const paginatedTodos = filteredTodos.slice(
+  (page - 1) * ITEMS_PER_PAGE,
+  page * ITEMS_PER_PAGE,
+);
   return (
     <div className="root">
       <TodosContext.Provider value={{ todos, setTodos }}>
@@ -89,7 +97,14 @@ export const App = () => {
         />
         <TodoForm />
         <TodoResults />
-        <TodoList todos={filteredTodos} />
+        <TodoList
+          todos={paginatedTodos}
+          totalTodos={filteredTodos.length}
+          page={page}
+          setPage={setPage}
+          itemsPerPage={ITEMS_PER_PAGE}
+        />
+
       </TodosContext.Provider>
     </div>
   );
