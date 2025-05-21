@@ -4,6 +4,7 @@ import { TodoList } from './components/todo-list';
 import { TodoResults } from './components/todo-results';
 import { TodosContext } from './todo-context';
 import { TodoFilters } from './components/todo-filters/todo-filters';
+import { TaskDetails } from './components/task-details/task-details';
 import './index.scss';
 
 const todosTemplate = [
@@ -82,10 +83,27 @@ export const App = () => {
   React.useEffect(() => {
   setPage(1);
 }, [searchTerm, filter]);
-const paginatedTodos = filteredTodos.slice(
+  const paginatedTodos = filteredTodos.slice(
   (page - 1) * ITEMS_PER_PAGE,
   page * ITEMS_PER_PAGE,
 );
+const [detailsTask, setDetailsTask] = React.useState(null);
+const openDetails = (task) => {
+  console.log('Opening details for:', task);
+  setDetailsTask(task);
+};
+
+const closeDetails = () => setDetailsTask(null);
+// Inside App component (add this before `return`)
+const handleEditFromDetails = (updatedLabel) => {
+  if (detailsTask && updatedLabel.trim()) {
+    setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === detailsTask.id
+          ? { ...todo, label: updatedLabel.trim() } : todo
+      )));
+    closeDetails();
+  }
+};
+
   return (
     <div className="root">
       <TodosContext.Provider value={{ todos, setTodos }}>
@@ -103,9 +121,21 @@ const paginatedTodos = filteredTodos.slice(
           page={page}
           setPage={setPage}
           itemsPerPage={ITEMS_PER_PAGE}
+          onSelectTask={openDetails}
         />
-
+        {detailsTask && (
+        <TaskDetails
+          task={detailsTask}
+          onClose={closeDetails}
+          onEdit={() => {
+          const newLabel = prompt('Edit Task Label:', detailsTask.label);
+          if (newLabel !== null) {
+          handleEditFromDetails(newLabel);
+      }
+    }}
+        />
+)}
       </TodosContext.Provider>
     </div>
-  );
+    );
 };

@@ -5,28 +5,35 @@ import './todo-list.scss';
 
 export const TodoList = ({
   todos, totalTodos, page, setPage,
-  itemsPerPage,
+  itemsPerPage, onSelectTask,
  }) => {
   const { setTodos } = React.useContext(TodosContext);
-
   const handleDelete = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
   const toggleCheck = (id) => {
-  setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === id
-        ? { ...todo, checked: !todo.checked }
-        : todo)));
-};
-const handleKeyUp = (e, id) => {
+    setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === id
+      ? { ...todo, checked: !todo.checked }
+      : todo)));
+  };
+
+  const handleKeyUp = (e, id) => {
     if (e.keyCode === 13) {
       toggleCheck(id);
     }
   };
 
+ const handleEdit = (id, newLabel) => {
+    if (newLabel.trim()) {
+      setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === id
+        ? { ...todo, label: newLabel.trim() } : todo
+        )));
+    }
+  };
   return (
     <div className="todo-list">
       <span className="todo-list-title">Things to do:</span>
-      {todos.length > 0 ? (
+      {todos.length > 0 && (
         <div className="todo-list-content">
           {todos.map((todoItem) => (
             <Checkbox
@@ -36,40 +43,40 @@ const handleKeyUp = (e, id) => {
               onClick={() => toggleCheck(todoItem.id)}
               onKeyUp={(e) => handleKeyUp(e, todoItem.id)}
               onDelete={() => handleDelete(todoItem.id)}
+              onEdit={(newLabel) => handleEdit(todoItem.id, newLabel)}
+              onLabelClick={() => onSelectTask(todoItem)}
             />
           ))}
         </div>
-      ) : (
-        <div className="no-todos">Looks like you&apos;re up for a challenge!</div>
       )}
       {totalTodos > itemsPerPage && (
-      <div className="pagination">
-        <button
-          type="button"
-          onClick={() => setPage((p) => Math.max(p - 1, 1))}
-          disabled={page === 1}
-        >
-          Prev
-        </button>
-        <span className="page-info">
-          Page
-          {' '}
-          {page}
-          {' '}
-          of
-          {' '}
-          {Math.ceil(totalTodos / itemsPerPage)}
-        </span>
-        <button
-          type="button"
-          onClick={() => setPage((p) => Math.min(p + 1,
-            Math.ceil(totalTodos / itemsPerPage)))}
-          disabled={page === Math.ceil(totalTodos / itemsPerPage)}
-        >
-          Next
-        </button>
-      </div>
-    )}
+        <div className="pagination">
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+          <span className="page-info">
+            Page
+            {' '}
+            {page}
+            {' '}
+            of
+            {' '}
+            {Math.ceil(totalTodos / itemsPerPage)}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(p + 1,
+              Math.ceil(totalTodos / itemsPerPage)))}
+            disabled={page === Math.ceil(totalTodos / itemsPerPage)}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

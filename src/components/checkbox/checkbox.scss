@@ -6,6 +6,7 @@
   margin: 8px auto;
   cursor: pointer;
   user-select: none;
+  gap: 10px;
 
   &-content {
     border-radius: 6px;
@@ -32,7 +33,7 @@
   }
 
   &-delete {
-    background: #c8c8c8;
+    background: #dda1a1;
     border: none;
     cursor: pointer;
     width: 28px;
@@ -67,6 +68,66 @@
     font-style: italic;
   }
 }
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-label-wrapper {
+  flex: 1;
+}
+.checkbox-save{
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+.edit-input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 4px 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.checkbox-edit {
+  background-color: #f7c873; // warm yellow
+  color: #333;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f2b958;
+  }
+
+  &:focus {
+    outline: 2px solid #1e90ff;
+    outline-offset: 2px;
+  }
+}
+
+.checkbox-details {
+  background-color: #98d7c2; // mint green
+  color: #222;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #84cbb5;
+  }
+
+  &:focus {
+    outline: 2px solid #1e90ff;
+    outline-offset: 2px;
+  }
+}
 
 /* Responsive tweaks */
 @media (max-width: 480px) {
@@ -85,3 +146,4 @@
     }
   }
 }
+
