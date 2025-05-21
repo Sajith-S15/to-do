@@ -6,7 +6,7 @@ export const TodoResults = () => {
   const { todos } = React.useContext(TodosContext);
   const calculateChecked = () => todos.filter((todo) => todo.checked).length;
   return (
-    <div className="todo-results">
+    <div className="todo-results" role="status" aria-live="polite">
       Done:
       {calculateChecked()}
     </div>

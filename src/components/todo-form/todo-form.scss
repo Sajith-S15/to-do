@@ -60,12 +60,12 @@
   }
 
   /* For responsiveness on small screens */
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
     flex-direction: column;
 
     input,
     button {
-      width: 100%;
+      width: 50%;
       max-width: none;
     }
 

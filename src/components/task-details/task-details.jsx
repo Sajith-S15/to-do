@@ -6,9 +6,9 @@ export const TaskDetails = ({ task, onClose, onEdit }) => {
     return null;
   }
     return (
-      <div className="task-details-overlay">
+      <div className="task-details-overlay" role="dialog" aria-modal="true" aria-labelledby="task-details-heading">
         <div className="task-details">
-          <h2>Task Details</h2>
+          <h2 id="task-details-heading">Task Details</h2>
           <p>
             <strong>Label:</strong>
             {task.label}

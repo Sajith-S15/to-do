@@ -31,10 +31,10 @@ export const TodoList = ({
     }
   };
   return (
-    <div className="todo-list">
-      <span className="todo-list-title">Things to do:</span>
+    <div className="todo-list" role="region" aria-labelledby="todo-list-title">
+      <span className="todo-list-title" id="todo-list-title">Things to do:</span>
       {todos.length > 0 && (
-        <div className="todo-list-content">
+        <div className="todo-list-content" role="list" aria-label="To-do items">
           {todos.map((todoItem) => (
             <Checkbox
               key={todoItem.id}
@@ -50,11 +50,12 @@ export const TodoList = ({
         </div>
       )}
       {totalTodos > itemsPerPage && (
-        <div className="pagination">
+        <div className="pagination" role="navigation" aria-label="Pagination">
           <button
             type="button"
             onClick={() => setPage((p) => Math.max(p - 1, 1))}
             disabled={page === 1}
+            aria-label="Previous page"
           >
             Prev
           </button>
@@ -72,6 +73,7 @@ export const TodoList = ({
             onClick={() => setPage((p) => Math.min(p + 1,
               Math.ceil(totalTodos / itemsPerPage)))}
             disabled={page === Math.ceil(totalTodos / itemsPerPage)}
+            aria-label="Next page"
           >
             Next
           </button>
